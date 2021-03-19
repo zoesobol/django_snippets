@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
     <head>
@@ -7,9 +8,13 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="signin.css" crossorigin="anonymous">
-        <style type="text/css"></style>
-        <title>Django Snippets</title>
+        <link rel="stylesheet" href="{% static 'css/members.css' %}" crossorigin="anonymous">
+        
+
+
+
+
+        <title>{% block title %}{% endblock %} Django Snippets by Zoe Sobol</title>
     </head>
     <body>
         <header>
@@ -24,13 +29,28 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Snipets</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url 'snippet_add' %}">Cargar Snippets</a>
                                 <a class="dropdown-item" href="{% url 'index' %}">Listado de Snippets</a>                
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" tabindex="-1">Salir</a>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.username }}</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'snippet_add' %}">Cargar Snippet</a>
+                                <a class="dropdown-item" href="{% url 'snippet_add' %}">Mis Snippets</a>
+                            </div>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </nav>
