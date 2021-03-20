@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 
 class Language(models.Model):
@@ -19,7 +20,7 @@ class Snippet(models.Model):
     updated = models.DateField(auto_now=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    snippet = models.TextField()
+    snippet = RichTextField()
     language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='language')
     public = models.BooleanField(default=False)
 

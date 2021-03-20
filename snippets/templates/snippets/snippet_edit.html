@@ -4,9 +4,10 @@
 
 <form method="POST" class="mt-2" action="">
     {% csrf_token %} 
+    {{ form.media }}
     {{form|crispy }}
 
-    <button type="submit" class="btn btn-success">Confirmar Edicion</button>
+    <button type="submit" class="btn btn-success">Confirm edit</button>
 </form>
 
 {% endblock %}

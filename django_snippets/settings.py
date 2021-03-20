@@ -39,8 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'ckeditor',
     'members',
 ]
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['CodeSnippet'],
+        ],
+        'extraPlugins': 'codesnippet',
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -135,6 +146,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 
+
+#Crispy
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 # Activate Django-Heroku.

@@ -9,9 +9,9 @@
         <a href="{% url 'language' snippet.language.pk %}"><h5 class="card-title">{{ snippet.language }}</h5></a> 
         <h6 class="card-subtitle mb-2 text-muted">Creado: {{ snippet.created }}</h6>
         <p class="card-text">{{ snippet.description }}</p>
-        <div style="background-color:lightgray;border-radius: 5px;">
+        <div>
           <!-- Código del Snippet -->
-          <samp>{{ snippet.snippet }}</samp>
+          {{ snippet.snippet|safe }}
           <!-- Código del Snippet -->
         </div>
         <hr>

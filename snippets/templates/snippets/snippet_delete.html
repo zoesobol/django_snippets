@@ -1,0 +1,14 @@
+{% extends "base.html" %} 
+
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    <p>¿Desea eliminar el snippet {{snippet.id }}?</p>
+    <button type="submit">Confirmar</button>
+    <a href="{% url 'index' %}"><button type="button">Cancelar</button></a>
+
+</form> 
+
+{% endblock %}
