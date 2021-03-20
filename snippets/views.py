@@ -9,6 +9,7 @@ class IndexView(ListView):
     model = models.Snippet
     template_name = 'index.html'
     ordering = ['-id']
+    queryset = models.Snippet.objects.filter(public=True)
 
 
 class LanguageView(ListView):
@@ -21,14 +22,19 @@ class LanguageView(ListView):
 
 
 class UserView(ListView):
-    model = User
+    model = models.User
     template_name = 'snippets/user_snippets.html'
 
-    def get_queryset(self, *args, **kwargs):
+    def get_queryset(self):
         self.username = get_object_or_404(self.model, username=self.kwargs['username'])
-        return super().get_queryset(*args, **kwargs).filter(
-            user__username=self.username.username
-        )
+        snippets = models.Snippet.objects.filter(user=self.username)
+
+        if self.request.user.is_authenticated != False and str(self.request.user.username) != str(self.username):
+            print(self.username)
+            print(self.request.user.username)
+            snippets = snippets.exclude(public = 'False')
+
+        return snippets
 
 class SnippetDetailView(DetailView):
     model = models.Snippet
