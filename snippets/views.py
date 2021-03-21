@@ -4,6 +4,10 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from . import models
 from . import forms
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
+
+from .tasks import send_email_task
+
 
 class IndexView(ListView):
     model = models.Snippet
@@ -30,11 +34,10 @@ class UserView(ListView):
         snippets = models.Snippet.objects.filter(user=self.username)
 
         if self.request.user.is_authenticated != False and str(self.request.user.username) != str(self.username):
-            print(self.username)
-            print(self.request.user.username)
             snippets = snippets.exclude(public = 'False')
 
         return snippets
+
 
 class SnippetDetailView(DetailView):
     model = models.Snippet
@@ -47,7 +50,23 @@ class AddSnippetView(CreateView):
     form_class = forms.SnippetForm
     success_url = reverse_lazy('index')
 
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['name']
+            body = form.cleaned_data['description']
+            recipient = self.request.user.email
 
+            try:
+                send_email_task(subject,body,recipient).delay()
+            except:
+                pass
+
+            form.save()
+
+            return HttpResponseRedirect(reverse_lazy('index'))
+
+        return render(request, self.template_name, {'form':form})
 
 
 class SnippetUpdateView(UpdateView):

@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'gz(%zk5m1&tiv(_&$)^69(a!bos)4iuzp7y4d8eyi&td2eqj+u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['mrmapp.herokuapp.com']
 
@@ -154,3 +154,21 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+
+# Celery
+
+CELERY_BROKER_URL = 'redis://:pa1e66b2ed9e3288af76718245af3da25691e3701c4ee970fca4fe36714d7a0ab@ec2-23-20-196-18.compute-1.amazonaws.com:19899'
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+
+# Email
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'zoecuentarandom@gmail.com'
+EMAIL_HOST_PASSWORD = 'djangocelery123'

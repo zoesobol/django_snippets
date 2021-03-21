@@ -5,9 +5,10 @@
         <h1>{{ snippet.language }} Snippets</h1>
         <br>
         {% for snippet in object_list %}
+        {% if snippet.public == True %}
             <!-- SNIPPET -->
             <div class="card">
-                <h5 class="card-header">{{ snippet.name }} {% if snippet.public == False %}<span class="badge badge-warning">Privado</span> {% endif %} <a href="{% url 'user_snippets' snippet.user.username %}"  class="float-right"><small>{{ snippet.user.username}}</small></a></h5>
+                <h5 class="card-header">{{ snippet.name }} <a href="{% url 'user_snippets' snippet.user.username %}"  class="float-right"><small>{{ snippet.user.username}}</small></a></h5>
                 <div class="card-body">
                     <a href="{% url 'language' snippet.language.name %}"><h5 class="card-title">{{ snippet.language }}</h5></a> 
                     <h6 class="card-subtitle mb-2 text-muted">Creado: {{ snippet.created }}</h6>
@@ -22,6 +23,7 @@
             </div>
             <br>
             <!-- FIN SNIPPET -->
+        {% endif %}
         {% endfor %}
 
   </div>
